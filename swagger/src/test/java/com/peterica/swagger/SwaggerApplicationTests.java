@@ -8,6 +8,7 @@ class SwaggerApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }
