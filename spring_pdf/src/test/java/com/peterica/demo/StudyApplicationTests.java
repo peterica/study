@@ -28,11 +28,13 @@ class StudyApplicationTests {
     @Test
     void contextLoads() {
         try{
-
+            // Resource에 있는 파일 가져오기
             ClassPathResource classPathResource = new ClassPathResource("pdf_test.pdf");
             InputStream inputStream = new BufferedInputStream(classPathResource.getInputStream());
 
-            File file = new File("/Users/peterseo/study/temp/pdf_test.pdf");
+            // 임시 저장위치
+//            File file = new File(tempPath+"pdf_test.pdf");
+            File file = File.createTempFile("pdf_test",".pdf");
             try (FileOutputStream outputStream = new FileOutputStream(file)){
                 int read;
                 byte[] bytes = new byte[1024];
@@ -43,13 +45,13 @@ class StudyApplicationTests {
 
             File returnFile = conversionPdf2Img(file);
             System.out.println(returnFile.isFile());
-            file.delete();
-
+            //임시파일 삭
+            file.deleteOnExit();
 
             //섬내일
             File tnFile = thumbnailS3Upload(returnFile);
             System.out.println(tnFile.isFile());
-            returnFile.delete();
+            returnFile.deleteOnExit();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -93,7 +95,6 @@ class StudyApplicationTests {
 
     public File thumbnailS3Upload(File file) throws Exception {
 
-
         // 썸네일 크기는 100X100
         BufferedImage sourceImg = ImageIO.read(file);
 
@@ -119,7 +120,22 @@ class StudyApplicationTests {
         return thumbFile;
     }
 
+    @Test
+    public void tempFileTest(){
+        try{
+            // temp_ 의 prefix 와 .dat의 subfix의 임시파일을 c:\\example\\file 의 경로에 저장한다.
+            File tempfile = File.createTempFile("temp_", ".dat");
+            // 생성된 파일의 실제 경로 표시
+            System.out.println(tempfile.getAbsolutePath());
 
+            // Delete temp flie
+            tempfile.deleteOnExit();
+            // 생성된 파일은 종료와 함께 자동으로 삭제 처리 될 것 이다.
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+
+    }
 
 
 }
