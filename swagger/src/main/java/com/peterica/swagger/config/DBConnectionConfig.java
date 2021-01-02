@@ -10,7 +10,6 @@ import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
@@ -27,9 +26,7 @@ public class DBConnectionConfig {
     @Value("${spring.datasource.classname}")
     private String dbClassName;
 
-
-    @Lazy
-    @Bean(destroyMethod = "close")
+    @Bean
     public DataSource dataSource() {
         final HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setUsername(dbUsername);
@@ -37,8 +34,8 @@ public class DBConnectionConfig {
         hikariConfig.addDataSourceProperty("url", dbUrl);
         hikariConfig.setDataSourceClassName(dbClassName);
         hikariConfig.setLeakDetectionThreshold(2000);
-        hikariConfig.setMaximumPoolSize(30); // -> 스레드 맥시멈 갯수 늘려봄.
-        hikariConfig.setPoolName("albamPool");
+        hikariConfig.setMaximumPoolSize(30);
+        hikariConfig.setPoolName("peterPool");
 
         final HikariDataSource dataSources = new HikariDataSource(hikariConfig);
         return dataSources;
@@ -55,7 +52,7 @@ public class DBConnectionConfig {
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*Mapper.xml"));
         sessionFactory.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("classpath:config/mybatis-config.xml"));
-        sessionFactory.setVfs(SpringBootVFS.class); // 이거 꼭 집어넣어 줄 것.
+        sessionFactory.setVfs(SpringBootVFS.class);
 
         return sessionFactory.getObject();
     }

@@ -16,13 +16,13 @@ public class DemoController {
 
     @GetMapping("/")
     @ApiOperation(httpMethod = "GET", value = "pingPong", notes = "pingPong",
-            response = String.class, tags = "국가 정보")
+            response = String.class, tags = "시스템 모니터링")
     public String pong(){
         return "pong";
     }
 
     @GetMapping("/dbTest")
-    @ApiOperation(httpMethod = "GET", value = "Mybatis Test", notes = "Mybatis Test")
+    @ApiOperation(httpMethod = "GET", value = "Mybatis Test", notes = "Mybatis Test", tags = "Mybatis테스트")
     public List<String> dbTest(){
         return testService.getTest();
     }
