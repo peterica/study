@@ -36,7 +36,7 @@ public class IntercomService {
 
             // 대화방 가져오기
             Conversation conversation = conversations.next();
-            System.out.println(conversation.getId());
+            log.info("conversation");
 
             // 대화들 가져오기
             ConversationPartCollection parts = conversation.getConversationPartCollection();
