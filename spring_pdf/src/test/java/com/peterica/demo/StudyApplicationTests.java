@@ -31,6 +31,9 @@ class StudyApplicationTests {
             // Resource에 있는 파일 가져오기
             ClassPathResource classPathResource = new ClassPathResource("pdf_test.pdf");
             InputStream inputStream = new BufferedInputStream(classPathResource.getInputStream());
+
+            // 임시 저장위치
+            File file = File.createTempFile("pdf_test",".pdf");
             try (FileOutputStream outputStream = new FileOutputStream(file)){
                 int read;
                 byte[] bytes = new byte[1024];
