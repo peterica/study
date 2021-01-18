@@ -105,6 +105,7 @@ class StudyApplicationTests {
             nh = oh;
         }
 
+
         // 계산된 크기로 원본이미지를 가운데에서 crop 합니다.
         BufferedImage cropImg = Scalr.crop(sourceImg, (ow - nw) / 2, (oh - nh) / 2, nw, nh);
         BufferedImage destImg = Scalr.resize(cropImg, 100, 100);
