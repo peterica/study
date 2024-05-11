@@ -1,11 +1,9 @@
 package com.peterica.demo
 
-import kotlin.text.*
+/*  [Kotlin] 개발 환경 세팅
+    https://peterica.tistory.com/650
+ */
 
 fun main() {
-    // 표준출력
-    print("Hello ")
-    print("world!!\n")
-    // 줄바꿈 출력
     println("Hello, world!!!")
 }
