@@ -87,18 +87,17 @@ fun String.getTimeNow(): String {
     }
 }
 
-// File 객체를 재쥐저긍로 삭제한다.
+// File 객체를 재귀적으로 삭제
 fun deleteFolder(folder: File): Boolean {
-    if (folder.exists()) {
-        val files = folder.listFiles()
-        if (files != null) {
-            for (file in files) {
-                if (file.isDirectory) {
-                    deleteFolder(file)
-                } else {
-                    file.delete()
-                }
-            }
+    if (!folder.exists())
+        return false
+
+    folder.listFiles().let { files ->
+        files.forEach {file ->
+            if (file.isDirectory)
+                deleteFolder(file)
+            else
+                file.delete()
         }
     }
     return folder.delete()
