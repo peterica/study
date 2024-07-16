@@ -3,10 +3,9 @@ package com.peterica.demo
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.nio.file.Files
-import java.nio.file.Path
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
@@ -36,6 +35,8 @@ fun main() {
     ZipOutputStream(FileOutputStream(zipFile)).use { zipOut ->
         baseDir.listFiles()?.filter { it.isDirectory }?.forEach { folder ->
             addFolderToZip(folder, folder.name, zipOut)
+            println("time sleep!! size:${zipFile.length()}")
+            Thread.sleep(TimeUnit.SECONDS.toMillis(60))
         }
     }
 
